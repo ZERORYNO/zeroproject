@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>9 Dot Navigation Menu with Links</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="navigation">
+            <span style="--i:0;--x:-1;--y:-1;"><a href="https://www.google.com" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
+            <span style="--i:1;--x:0;--y:-1;"><a href="https://www.facebook.com/khamseng.minecarft?locale=th_TH" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+            <span style="--i:2;--x:1;--y:-1;"><a href="https://www.youtube.com" target="_blank"><ion-icon name="water-outline"></ion-icon></a></span>
+            
+            <span style="--i:3;--x:-1;--y:0;"><a href="https://www.instagram.com" target="_blank"><ion-icon name="camera-outline"></ion-icon></a></span>
+            <span style="--i:4;--x:0;--y:0;"><ion-icon name="close-outline"></ion-icon></span>
+            <span style="--i:5;--x:1;--y:0;"><a href="https://www.twitter.com" target="_blank"><ion-icon name="diamond-outline"></ion-icon></a></span>
+            
+            <span style="--i:6;--x:-1;--y:1;"><a href="https://www.discord.com" target="_blank"><ion-icon name="game-controller-outline"></ion-icon></a></span>
+            <span style="--i:7;--x:0;--y:1;"><a href="https://www.gmail.com" target="_blank"><ion-icon name="alarm-outline"></ion-icon></a></span>
+            <span style="--i:8;--x:1;--y:1;"><a href="https://www.tiktok.com" target="_blank"><ion-icon name="time-outline"></ion-icon></a></span>
+        </div>
+    </div>
+
+    <script>
+        let navigation = document.querySelector('.navigation');
+        // แก้ไขให้คลิกได้ทั้งเมนู แต่ถ้าคลิกปุ่มที่มีลิงก์ตอนเมนูเปิดอยู่ มันจะไปที่เว็บนั้น
+        navigation.onclick = function() {
+            navigation.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
+
+let navigation = document.querySelector('.navigation');
+navigation.onclick = function() {
+    navigation.classList.toggle('active');
+}

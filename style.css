@@ -1,0 +1,74 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #222327; /* พื้นหลังสีเข้มตามรูป */
+}
+
+.main {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 170px; /* ขนาดตามในรูปเป๊ะๆ */
+    height: 170px;
+}
+
+.navigation {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.navigation span {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: #fff; /* เริ่มต้นเป็นจุดสีขาวเล็กๆ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 0.5s;
+    transition-delay: calc(0.1s * var(--i));
+}
+
+/* เมื่อคลิก (Active) ให้จุดขยายกลายเป็นช่องเมนู */
+.navigation.active span {
+    width: 45px;
+    height: 45px;
+    background: #333439;
+    transform: translate(calc(60px * var(--x)), calc(60px * var(--y)));
+    border-radius: 10px;
+}
+
+/* ตกแต่งไอคอนภายใน */
+.navigation span ion-icon {
+    font-size: 0em; /* ซ่อนไอคอนตอนปิด */
+    transition: 0.5s;
+}
+
+.navigation.active span ion-icon {
+    font-size: 1.5em; /* แสดงไอคอนตอนเปิด */
+    color: #fff;
+}
+
+/* ไฮไลท์สีเขียวตรงกลาง (ปุ่มปิด) */
+.navigation.active span:nth-child(5) {
+    background: #2dfc52;
+}
+.navigation.active span:nth-child(5) ion-icon {
+    color: #333;
+}
