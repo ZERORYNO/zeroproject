@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Animated Leaf Login</title>
-    <link rel="stylesheet" href="login-style.css">
     <style>
         /* --- ตั้งค่าพื้นฐาน --- */
         * {
@@ -152,13 +151,13 @@
         <div class="login">
             <h2>Sign In</h2>
             <div class="inputBox">
-                <input type="text" placeholder="Username">
+                <input type="text" id="user" placeholder="Username">
             </div>
             <div class="inputBox">
-                <input type="password" placeholder="Password">
+                <input type="password" id="pass" placeholder="Password">
             </div>
             <div class="inputBox">
-                <input type="submit" value="Login" id="btn">
+                <input type="button" value="Login" id="btn">
             </div>
             <div class="group">
                 <a href="#">Forget Password</a>
@@ -169,8 +168,15 @@
 
     <script>
         document.getElementById('btn').onclick = function(){
-            // เปลี่ยนเป็น sessionStorage เพื่อให้สถานะหายไปเมื่อรีเฟรชหน้าเว็บ
-            sessionStorage.setItem('isLoggedIn', 'true');
+            // รับค่าจากช่องกรอก (ถ้าต้องการเช็คชื่อ/รหัส)
+            const userValue = document.getElementById('user').value;
+            const passValue = document.getElementById('pass').value;
+
+            // แก้ไข: ใช้ localStorage แทน sessionStorage เพื่อให้ตรงกับตัวเช็คในหน้า index.html 
+            // ที่เราเขียนไว้ก่อนหน้านี้ (localStorage.getItem("isLoggedIn"))
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // ส่งไปหน้าเมนูหลัก
             window.location.href = "index.html";
         }
     </script>
