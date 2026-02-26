@@ -2,37 +2,152 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>9 Dot Navigation Menu with Links</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Dashboard</title>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { min-height: 100vh; overflow: hidden; display: flex; color: #fff; background: #000; }
+
+        /* --- วิดีโอพื้นหลัง (ล็อคสัดส่วน) --- */
+        #bgVideo {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -2;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: -1; 
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            position: fixed; left: 20px; top: 20px; width: 260px; height: calc(100vh - 40px);
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex; flex-direction: column; padding: 30px 20px; 
+            z-index: 100;
+        }
+
+        .user-avatar {
+            width: 60px; height: 60px; display: flex; justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.2); border-radius: 50%; border: 2px solid #fff;
+        }
+        .user-avatar ion-icon { font-size: 3.5rem; color: #fff; }
+
+        .menu-list { list-style: none; flex-grow: 1; margin-top: 20px; }
+        .menu-list li a {
+            display: flex; align-items: center; gap: 15px; color: #fff;
+            text-decoration: none; padding: 12px 15px; border-radius: 15px; transition: 0.3s;
+        }
+        .menu-list li a:hover { background: rgba(255,255,255,0.2); color: #0ea5e9; }
+
+        /* --- เมนูขวาล่าง (เรียงตั้ง) --- */
+        .navigation {
+            position: fixed; right: 30px; bottom: 30px;
+            display: flex; flex-direction: column-reverse; 
+            align-items: center; 
+            z-index: 1000;
+        }
+
+        .toggle-btn {
+            width: 55px; height: 55px; background: #fff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.8rem; color: #0f172a; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: 0.4s;
+            pointer-events: auto;
+        }
+
+        .navigation.active .toggle-btn { transform: rotate(135deg); background: #ff4b5c; color: #fff; }
+
+        .navigation span {
+            width: 45px; height: 45px; display: flex; justify-content: center; align-items: center;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
+            border-radius: 50%; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.3);
+            opacity: 0; transform: translateY(20px) scale(0); transition: 0.4s;
+            transition-delay: calc(0.05s * var(--i)); 
+            pointer-events: none;
+        }
+
+        .navigation.active span { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            pointer-events: auto;
+        }
+
+        .navigation span a { color: #fff; font-size: 1.4rem; display: flex; text-decoration: none; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        .navigation span:hover { background: #0ea5e9; transform: scale(1.1); }
+
+        .content { margin-left: 300px; padding: 40px; }
+    </style>
 </head>
 <body>
-    <div class="main">
-        <div class="navigation">
-            <span style="--i:0;--x:-1;--y:-1;"><a href="https://www.google.com" target="_blank"><ion-icon name="logo-google"></ion-icon></a></span>
-            <span style="--i:1;--x:0;--y:-1;"><a href="https://www.facebook.com/khamseng.minecarft?locale=th_TH" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
-            <span style="--i:2;--x:1;--y:-1;"><a href="https://www.youtube.com" target="_blank"><ion-icon name="water-outline"></ion-icon></a></span>
-            
-            <span style="--i:3;--x:-1;--y:0;"><a href="https://www.instagram.com" target="_blank"><ion-icon name="camera-outline"></ion-icon></a></span>
-            <span style="--i:4;--x:0;--y:0;"><ion-icon name="close-outline"></ion-icon></span>
-            <span style="--i:5;--x:1;--y:0;"><a href="https://www.twitter.com" target="_blank"><ion-icon name="diamond-outline"></ion-icon></a></span>
-            
-            <span style="--i:6;--x:-1;--y:1;"><a href="https://www.discord.com" target="_blank"><ion-icon name="game-controller-outline"></ion-icon></a></span>
-            <span style="--i:7;--x:0;--y:1;"><a href="https://www.gmail.com" target="_blank"><ion-icon name="alarm-outline"></ion-icon></a></span>
-            <span style="--i:8;--x:1;--y:1;"><a href="https://www.tiktok.com" target="_blank"><ion-icon name="time-outline"></ion-icon></a></span>
+
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="zero1.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+
+    <div class="sidebar">
+        <div class="profile">
+            <div class="user-avatar"><ion-icon name="person-circle-outline"></ion-icon></div>
+            <div class="info">
+                <h3 style="margin-top:10px">ບັກຄຳແສງ</h3>
+                <p style="color:rgba(255,255,255,0.6)">khamsengr@email.com</p>
+            </div>
         </div>
+        <ul class="menu-list">
+            <li><a href="#"><ion-icon name="mail-outline"></ion-icon> Inbox</a></li>
+            <li><a href="#"><ion-icon name="stats-chart-outline"></ion-icon> Stats</a></li>
+            <li><a href="#"><ion-icon name="notifications-outline"></ion-icon> Notifications</a></li>
+        </ul>
     </div>
 
+    <div class="content">
+        <h1>ບັກຄຳແສງ</h1>
+        <p>ເຂົ້າມາເບິ່ງຫຍັງເຫີ້ຍ ລອງກົດgoogleເບິ່ງ</p>
+    </div>
+
+   <div class="navigation" id="navContainer">
+    <div class="toggle-btn" id="menuToggle">
+        <ion-icon name="add-outline"></ion-icon>
+    </div>
+
+    <span style="--i:5;">
+        <a href="https://www.pinterest.com/pin/498914464991656453/" target="_blank">
+            <ion-icon name="logo-google"></ion-icon>
+        </a>
+    </span>
+
+    <span style="--i:4;"><a href="https://www.facebook.com" target="_blank"><ion-icon name="logo-facebook"></ion-icon></a></span>
+    <span style="--i:3;"><a href="https://www.youtube.com" target="_blank"><ion-icon name="logo-youtube"></ion-icon></a></span>
+    <span style="--i:2;"><a href="https://www.instagram.com" target="_blank"><ion-icon name="logo-instagram"></ion-icon></a></span>
+    <span style="--i:1;"><a href="https://www.tiktok.com" target="_blank"><ion-icon name="logo-tiktok"></ion-icon></a></span>
+    <span style="--i:0;"><a href="https://mail.google.com" target="_blank"><ion-icon name="mail-outline"></ion-icon></a></span>
+</div>
+
     <script>
-        let navigation = document.querySelector('.navigation');
-        // แก้ไขให้คลิกได้ทั้งเมนู แต่ถ้าคลิกปุ่มที่มีลิงก์ตอนเมนูเปิดอยู่ มันจะไปที่เว็บนั้น
-        navigation.onclick = function() {
-            navigation.classList.toggle('active');
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menuToggle');
+            const navContainer = document.getElementById('navContainer');
+
+            if (menuToggle && navContainer) {
+                menuToggle.onclick = function(e) {
+                    e.preventDefault();
+                    navContainer.classList.toggle('active');
+                };
+            }
+        });
     </script>
 </body>
 </html>
-
-<h1 style="color: #ffffff; text-align: center; font-family: sans-serif; margin-top: 20px;">
-  ມຶງລອງກົດເບິ່ງສີຂາວໆນະແລ້ວລອງກົດເຟສບຸກ
-</h1>
