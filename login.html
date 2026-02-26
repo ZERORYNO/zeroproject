@@ -82,7 +82,6 @@
             color: #fff;
         }
 
-        /* --- จัดการสีน้ำเงินและระยะห่างของลิงก์ --- */
         .group {
             display: flex;
             justify-content: space-between;
@@ -167,18 +166,18 @@
     </section>
 
     <script>
-        document.getElementById('btn').onclick = function(){
-            // รับค่าจากช่องกรอก (ถ้าต้องการเช็คชื่อ/รหัส)
-            const userValue = document.getElementById('user').value;
-            const passValue = document.getElementById('pass').value;
+        document.getElementById('btn').addEventListener('click', function(e) {
+            e.preventDefault(); // ป้องกันพฤติกรรมเดิมของปุ่ม
+            
+            console.log("พยายามเข้าสู่ระบบ...");
 
-            // แก้ไข: ใช้ localStorage แทน sessionStorage เพื่อให้ตรงกับตัวเช็คในหน้า index.html 
-            // ที่เราเขียนไว้ก่อนหน้านี้ (localStorage.getItem("isLoggedIn"))
+            // บันทึกสถานะการล็อคอิน
             localStorage.setItem('isLoggedIn', 'true');
             
-            // ส่งไปหน้าเมนูหลัก
+            // ย้ายไปหน้าเมนูหลัก
+            // **ตรวจสอบให้แน่ใจว่าไฟล์หน้าเมนูของคุณชื่อ index.html จริงๆ**
             window.location.href = "index.html";
-        }
+        });
     </script>
 </body>
 </html>
